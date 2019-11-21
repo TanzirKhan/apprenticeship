@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="paint.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign Up</title>
+    </head>
+    <body id="con">
+        <section id="banner">
+            <a href="home.html" id="banner">Evolve</a>
+            <a href="home.html"><button type="button" class="nav">Home</button></a>
+            <a href="register.html"><button type="button" class="nav">Sign up</button></a>
+            <a href="index.html"><button type="button" class="nav">Store</button></a>
+        </section>
+        <div class="header">
+            <div class="neck">
+                <h1 class="text">Make an account</h1>
+            </div>
+            <div class="neck">
+                    <button type="button" class="colour" id="night">Change mode</button>
+            </div>
+        </div>
+        <form id="reg">
+            <input type="text" placeholder="First Name*" name="fname" id="fn"><br>
+            <br>
+            <input type="text" placeholder="Surname*" name="sname" id="sn"><br>
+            <br>
+            <input type="text" placeholder="Email Address*" name="email" id="email"><br>
+            <br>
+            <input type="password" placeholder="Password*" name="psw" id="ps"><br>
+            <br>
+            <input type="number" placeholder="Phone Number" name="phone" id="ring"><br>
+            <br>
+            <span class="text">Gender:</span>
+            <label for="male" class="text">Male</label> <input type="radio" name="gender" id="male" value="male"> <label for="female" class="text">Female</label><input type="radio" name="gender" id="female" value="female"><br>
+            <button type="button" id="submit">Submit</button>
+            <br>
+            <p id="thanks"></p>
+        </form>
+        <script src="evolve.js">
+            var message = document.getElementById('submit');
+            message.addEventListener("click", registration);
+        </script>
+    </body>
+</html>

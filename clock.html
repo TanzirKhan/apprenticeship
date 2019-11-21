@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <canvas id="bobRoss" width="500px" height="500px" style="border-style: solid; border-color: black; background-color:white;"></canvas>
+        <script>
+                var art = document.getElementById("bobRoss");
+                var brush = art.getContext("2d");   
+                var radius = (art.height/2);
+                brush.translate(radius,radius);
+                radius = radius*0.9;
+                setInterval(paint,1000);
+                full = 2*Math.PI;          
+
+                function test(event){
+                    var x = event.clientX;
+                    var y = event.clientY;
+                    console.log(x,y);
+                }
+
+                function paint(){
+                    clock(brush, radius);
+                    drawNumbers(brush, radius);
+                    dial(brush, radius);
+                    dio(brush,radius);
+                }
+                function drawbruh(x,y,size,start,end, colour, n){
+                    brush.beginPath();
+                    brush.arc(x,y,size,start,end);
+                    switch(n){
+                        case 0:
+                            brush.fillStyle = colour;
+                            brush.fill();
+                            break;
+                        case 1:
+                            brush.lineWidth = 10;
+                            brush.strokeStyle = colour;
+                            brush.stroke();
+                            break;
+                    }                  
+                }
+                function clock(brush, radius){
+                    drawbruh(0,0,radius,0,full,"black",0);//clock face
+                    drawbruh(-40,-60,radius*0.09,0,full,"#000055",0);//blue circle
+                    drawbruh(55,80,radius*0.062,0,full,"#660000",0);//red circle
+                    drawbruh(70,-101,radius*0.055,0,full,"#444444",0);//grey circle
+                }
+    
+                function drawNumbers(brush, radius){
+                    var rot;
+                    var num;
+                    brush.font = radius*0.15 + "px impact";
+                    brush.textBaseLine = "middle";
+                    brush.textAlign = "center";
+                    brush.fillStyle="white";
+                    for(num=1; num<13;num++){
+                        rot = num *Math.PI / 6;
+                        brush.rotate(rot);
+                        brush.translate(0, -radius*0.85);
+                        brush.rotate(-rot);
+                        brush.fillText(num.toString(),0,10);
+                        brush.rotate(rot);
+                        brush.translate(0, radius*0.85);
+                        brush.rotate(-rot);
+                    }
+                }   
+                function dial(brush, radius){
+                    var turn;
+                    var i;
+                    brush.font = radius*0.05 + "px arial";
+                    brush.textBaseLine = "middle";
+                    brush.textAlign = "center";
+                    brush.fillStyle = "white";
+                    //brush.save();
+                    for(i=1; i<61; i++){
+                        turn =(11*Math.PI/30);//when using seconds as the numerator, the value 11 made the dials appear correctly. 30 is used as there is 30 diameters making 60 segments.
+                        brush.rotate(turn);
+                        brush.translate(0,-radius*0.985);
+                        brush.fillText("|",0,10);
+                        brush.translate(0, radius*0.985);             
+                    }
+                    //brush.restore();
+                }
+                function dio(brush, radius){
+                    var now = new Date();
+                    var hour = now.getHours();
+                    var minute = now.getMinutes();
+                    var second = now.getSeconds();
+                    hour=hour%12;
+                    hour=(hour*Math.PI/6)+
+                    (minute*Math.PI/(6*60))+
+                    (second*Math.PI/(360*60));
+                    hand(brush, hour, radius*0.5, radius*0.07, "white");
+                    minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+                    hand(brush, minute, radius*0.7, radius*0.03, "white");
+                    second=(second*Math.PI/30);
+                    hand(brush, second, radius*0.9, radius*0.02, "red");
+                    drawbruh(0,0,radius*0.06,0,full,"#ffff00",0);//centre circle
+                    drawbruh(0,0,radius*0.075,0,full,"black",1);//outer circle
+                }
+                function hand(brush, pos, len, width, clr){
+                    brush.beginPath();
+                    brush.lineCap = "round";
+                    brush.lineWidth=width;
+                    brush.moveTo(0,0);
+                    brush.rotate(pos);
+                    brush.lineTo(0, -len);
+                    brush.strokeStyle = clr;
+                    brush.stroke();
+                    brush.rotate(-pos);
+                }
+                window.addEventListener("load", function(){
+                    paint();
+                })
+                window.addEventListener("click", test);
+            </script>
+    </body>
+</html>
